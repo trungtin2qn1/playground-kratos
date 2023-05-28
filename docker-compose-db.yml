@@ -1,0 +1,52 @@
+version: '3.9'
+
+services:
+  postgres:
+    restart: always
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 11234566
+    ports:
+      - 5432:5432
+    networks:
+      - local_network
+
+  # adminer:
+  #   restart: always
+  #   image: adminer:latest
+  #   container_name: adminer
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - local_network
+  
+  redis-server:
+    restart: always
+    image: redis:latest
+    container_name: redis-server-0
+    #command: /bin/bash -c 'redis-server --appendonly yes'
+    sysctls:
+      - net.core.somaxconn=65535
+    ports:
+      - "6378:6379"
+    volumes:
+      - ./redis:/data
+    mem_limit: 96m
+    networks:
+      - local_network
+
+volumes:
+  postgres:
+    driver: local
+  redis:
+    driver: local
+  # adminer:
+  #   driver: local
+  etcd:
+    driver: local
+
+networks:
+  local_network:
+    driver: bridge
