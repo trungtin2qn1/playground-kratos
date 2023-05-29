@@ -1,0 +1,13 @@
+http:
+  routers:
+    routerApp:
+      rule: "Host(`playground.localhost`)"
+      service: app
+      entrypoints: web
+      # tls: {}
+  
+  services:
+    app:
+      loadBalancer:
+        servers:
+          - url: http://192.168.1.9:2000

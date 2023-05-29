@@ -72,7 +72,7 @@ all:
 	make generate;
 
 image:
-	docker build -t playground .
+	docker build -t playground-kratos .
 
 # show help
 help:
